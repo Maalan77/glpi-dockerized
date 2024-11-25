@@ -72,6 +72,9 @@ sed -i "s|^post_max_size .*|post_max_size = $GLPI_post_max_size|" `find / -name 
 sed -i "s|^memory_limit .*|memory_limit = $GLPI_memory_limit|" `find / -name php.ini`
 sed -i "s|^max_execution_time .*|max_execution_time = $GLPI_max_execution_time|" `find / -name php.ini`
 #sed -i "s|^;date\.timezone[[:space:]]=.*$|date.timezone = \"Europe/Moscow\"" `find / -name php.ini`
+sed -i "s|^session.cookie_secure .*|session.cookie_secure = on|" `find / -name php.ini`
+sed -i "s|^session.cookie_httponly .*|session.cookie_httponly = on|" `find / -name php.ini`
+sed -i "s|^session.cookie_samesite .*|session.cookie_samesite = Lax|" `find / -name php.ini`
 
 ## IPv6 disable
 sysctl net.ipv6.conf.all.disable_ipv6=0
