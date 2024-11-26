@@ -45,16 +45,8 @@ RUN cd /tmp/ \
     php-intl \
     php-bz2
 RUN cd /tmp/ \
-#    miredo \
-#  && echo "deb http://debian.fusioninventory.org/debian/ jessie main" >> /etc/apt/sources.list.d/fusioninventory.list \
-#  && echo "deb http://debian.fusioninventory.org/debian/ buster main" >> /etc/apt/sources.list.d/fusioninventory.list \
   && apt-get update -qqy \
-  && apt-get -y install gnupg2 \
-#  && wget -O - http://debian.fusioninventory.org/debian/archive.key | apt-key add - \
-#  && apt-key adv --keyserver keyserver.ubuntu.com --recv 049ED9B94765572E \
-#  && apt-get -y --allow-unauthenticated install \
- #   lsb-release \
-  #  libfusioninventory-agent-task-esx-perl \
+  && apt-get -y install gnupg2 bzip2 \
   ## clean
   && apt-get autoremove -qqy \
   && apt-get clean \
