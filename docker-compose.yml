@@ -82,8 +82,8 @@ services:
           
   glpi-agent:
     environment:
-      GLPI-AGENT-SERVER=http://glpi-server/front/inventory.php
-      GLPI-AGENT-LOCAL=/opt/inventory
+      - GLPI-AGENT-SERVER=http://glpi-server/front/inventory.php
+      - GLPI-AGENT-LOCAL=/opt/inventory
     build:
       context: glpi-agent
       dockerfile: Dockerfile
