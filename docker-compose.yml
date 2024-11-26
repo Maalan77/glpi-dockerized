@@ -79,6 +79,36 @@ services:
       resources:
         limits:
           memory: 4G
+          
+  glpi-agent:
+    environment:
+      GLPI-AGENT-SERVER=http://glpi-server/front/inventory.php
+      GLPI-AGENT-LOCAL=/opt/inventory
+    build:
+      context: glpi-agent
+      dockerfile: Dockerfile
+    privileged: true
+    hostname: glpi-agent
+    volumes:
+      - "/etc/timezone:/etc/timezone:ro"
+      - "/etc/localtime:/etc/localtime:ro"
+      - "${GLPI_PATH}/agent/conf:/etc/glpi-agent"
+      - "${GLPI_PATH}/agent/inventory:/opt/inventory"
+    container_name: "${GLPI_NAME}_agent"
+    links:
+      - glpi10:glpi-server
+    networks:
+      glpi-network:
+        ipv4_address: 172.22.1.4
+        aliases:
+          - glpi-agent
+    restart: always
+
+    sysctls:
+          net.ipv6.conf.all.disable_ipv6: 0
+
+#    logging:
+#      driver: none
 
 networks:
   glpi-network:
