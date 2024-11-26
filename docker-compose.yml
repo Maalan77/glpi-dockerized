@@ -93,8 +93,9 @@ services:
       - "/etc/timezone:/etc/timezone:ro"
       - "/etc/localtime:/etc/localtime:ro"
       - "${GLPI_PATH}/agent/conf:/etc/glpi-agent"
-      - "${GLPI_PATH}/agent/inventory:/opt/inventory"
+      - "${GLPI_PATH}/agent/inventory:$(GLPI-AGENT-LOCAL)"
       - "${GLPI_PATH}/agent/var:/var/lib/glpi-agent"
+      - "${GLPI_PATH}/agent/src:/usr/src/glpi-agent"
     container_name: "${GLPI_NAME}_agent"
     links:
       - glpi10:glpi-server
