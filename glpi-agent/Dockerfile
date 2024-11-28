@@ -1,17 +1,22 @@
 
-FROM perl:stable-bookworm
+FROM debian:bookworm
 LABEL org.opencontainers.image.authors="maalan77@gmail.com"
 
+ENV DEBIAN_FRONTEND noninteractive
+
 RUN cd /tmp/ \
+  && ln -sf /usr/share/zoneinfo/Europe/Moscow  /etc/localtime && dpkg-reconfigure -f noninteractive tzdata \
   && apt-get update -qqy \
-  && wget -O https://github.com/glpi-project/glpi-agent/releases/download/1.11/glpi-agent-1.11-linux-installer.pl
-  && perl glpi-agent-1.11-linux-installer.pl --server=${GLPI-AGENT-SERVER} --local=${GLPI-AGENT-LOCAL} \
+  && apt-get -y install perl wget
+
   ## clean
-  && apt-get autoremove -qqy \
+RUN apt-get autoremove -qqy \
   && apt-get clean \
-  && rm -rf /var/lib/apt/lists/* /tmp/*
+  && rm -rf /var/lib/apt/lists/* \
+  && rm -rf /tmp/*
 
-WORKDIR /usr/src/glpi-agent
+COPY entrypoint.sh /opt/
+RUN chmod +x /opt/entrypoint.sh
 
-CMD [ "perl", "-v" ]
+ENTRYPOINT ["/opt/entrypoint.sh"]
 
