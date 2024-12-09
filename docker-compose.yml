@@ -55,7 +55,7 @@ services:
       glpi-network:
         ipv4_address: 172.22.1.3
         aliases:
-          - mysql    
+          - mysql
     container_name: "${GLPI_NAME}_mysql"
     env_file:
       - ./.env
@@ -79,11 +79,8 @@ services:
       resources:
         limits:
           memory: 4G
-          
+
   glpi-agent:
-    environment:
-      - GLPI-AGENT-SERVER=http://glpi-server/front/inventory.php
-      - GLPI-AGENT-LOCAL=/opt/inventory
     build:
       context: glpi-agent
       dockerfile: Dockerfile
@@ -92,14 +89,13 @@ services:
     volumes:
       - "/etc/timezone:/etc/timezone:ro"
       - "/etc/localtime:/etc/localtime:ro"
-      - "${GLPI_PATH}/agent/conf:/etc/glpi-agent"
-      - "${GLPI_PATH}/agent/inventory:$(GLPI-AGENT-LOCAL)"
-      - "${GLPI_PATH}/agent/var:/var/lib/glpi-agent"
-      - "${GLPI_PATH}/agent/src:/usr/src/glpi-agent"
     container_name: "${GLPI_NAME}_agent"
     links:
       - glpi10:glpi-server
+    ports:
+      - 62354:62354
     networks:
+      lan_access:
       glpi-network:
         ipv4_address: 172.22.1.4
         aliases:
@@ -113,6 +109,8 @@ services:
 #      driver: none
 
 networks:
+  lan_access:
+    driver: bridge
   glpi-network:
     driver: bridge
     driver_opts:
@@ -121,4 +119,4 @@ networks:
     ipam:
       driver: default
       config:
-        - subnet: 172.22.1.0/29        
+        - subnet: 172.22.1.0/29
