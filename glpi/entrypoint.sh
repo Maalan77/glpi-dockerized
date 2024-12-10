@@ -26,14 +26,14 @@ else
         wget -P ${FOLDER_WEB} ${SRC_GLPI} -O ${TAR_GLPI}
         tar -xzf ${TAR_GLPI} -C ${FOLDER_WEB}
         rm -Rf  ${TAR_GLPI}
-        
+
         # install glpi inventory plugin
         SRC_GLPI="https://github.com/glpi-project/glpi-inventory-plugin/releases/download/1.4.0/glpi-glpiinventory-1.4.0.tar.bz2"
         TAR_GLPI=${FOLDER_WEB}glpi-glpiinventory.tar.bz2
         wget -P ${FOLDER_WEB} ${SRC_GLPI} -O ${TAR_GLPI}
         tar -xvf ${TAR_GLPI} -C ${FOLDER_WEB}${FOLDER_GLPI}plugins
         rm -Rf  ${TAR_GLPI}
-        
+
         chown -R www-data:www-data ${FOLDER_WEB}${FOLDER_GLPI}
 fi
 
