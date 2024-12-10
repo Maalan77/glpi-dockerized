@@ -81,6 +81,9 @@ services:
           memory: 4G
 
   glpi-agent:
+#    environment:
+#      - GLPI-AGENT-SERVER=http://glpi/front/inventory.php
+#      - GLPI-AGENT-LOCAL=/opt/inventory
     build:
       context: glpi-agent
       dockerfile: Dockerfile
@@ -89,7 +92,10 @@ services:
     volumes:
       - "/etc/timezone:/etc/timezone:ro"
       - "/etc/localtime:/etc/localtime:ro"
+#      - "${GLPI_PATH}/agent/conf:/etc/glpi-agent"
+#      - "${GLPI_PATH}/agent/:/opt/agent"
     container_name: "${GLPI_NAME}_agent"
+#    command: tail -F anything
     links:
       - glpi10:glpi-server
     ports:
